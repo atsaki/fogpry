@@ -9,7 +9,11 @@ module Fogpry
     attr_reader :profiles, :profile, :connection
 
     def initialize
-      @profiles = YAML.load_file(File.expand_path("~/.fogpry"))
+      begin
+        @profiles = YAML.load_file(File.expand_path("~/.fogpry"))
+      rescue
+        @profiles = {}
+      end
       @profile = nil
       @connection = nil
     end
