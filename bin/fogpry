@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+require 'fogpry'
+require 'pry'
+
+Pry.config.prompt = proc do |obj, _, _|
+  "fogpry[\001\e[1;34m\002#{obj.profile.nil? ? "nil" : obj.profile }\001\e[0m\002]> "
+end
+
+Pry::Commands.block_command "list-profiles", "List profiles" do
+  target_self.list_profiles
+end
+
+Pry::Commands.block_command "connect", "Connect using specified profile" do |profile|
+  target_self.connect(profile)
+end
+
+cli = Fogpry::Fogpry.new
+cli.pry
+
